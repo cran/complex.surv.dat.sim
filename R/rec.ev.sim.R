@@ -69,5 +69,6 @@ function(n, foltime, dist.ev, anc.ev, beta0.ev, dist.cens=rep("weibull",length(b
   class(sim.data) <- "rec.ev.data.sim"
   attr(sim.data, "n") <- n
   attr(sim.data, "foltime") <- foltime
+  attr(sim.data, "ndist") <- length(dist.ev)
   return(sim.data)
 }

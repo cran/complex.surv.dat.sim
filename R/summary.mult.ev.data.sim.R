@@ -1,29 +1,28 @@
 summary.mult.ev.data.sim <-
   function(object, ...)
   {
-    if(!inherits(object, "mult.ev.data.sim") &&
-      !inherits(object, "rec.ev.data.sim")) stop("Wrong data type")
-    ans <- vector()
-    pr         <- do.call("rbind", object)
-    ans[1]     <- attr(object,"n")
-    ans[2]     <- as.integer(sum(pr$status))
-    if (class(object) == "rec.ev.data.sim")
+    if(!inherits(object, "mult.ev.data.sim")) stop("Wrong data type")
+    sub.risk    <- vector()
+    num.events  <- vector()
+    foltime     <- vector()
+    med.foltime <- vector()
+    mean.ep.sub <- vector()
+    dens.incid  <- vector()
+    ev.num      <- vector()
+    pr     <- do.call("rbind", object)
+    for (i in 1:attr(object,"nsit"))
     {
-      ans[3]  <- sum(pr$time2)
-    }else{
-      ans[3]  <- sum(pr$time)
+       ev.num[i]      <- i
+       sub.risk[i]    <- attr(object,"n")
+       num.events[i]  <- as.integer(sum(pr$status[pr$ev.num==i]))
+       foltime[i]     <- sum(pr$time[pr$ev.num==i])
+       med.foltime[i] <- median(pr$time[pr$ev.num==i]) 
+       mean.ep.sub[i] <- sum(pr$status[pr$ev.num==i])/length(object)
+       dens.incid[i]  <- num.events[i]/foltime[i]
     }
-    if (class(object) == "rec.ev.data.sim")
-    {
-      ans[4]  <- median(pr$time2)
-    }else{
-      ans[4]  <- median(pr$time) 
-    } #if
-    ans[5]     <- sum(pr$status)/length(object)
-    ans[6]     <- ans[2]/ans[3]
-    names(ans) <- c("Number of subjects at risk", "Number of events", "Total time of follow-up",
-                    "Time of follow-up (median)", 
-                    "Mean episodes per subject", "Density of incidence")
-    class(ans) <- "summary.complex.surv.data.sim"
-    ans
+    ans <- data.frame(ev.num, sub.risk, num.events, 
+                 foltime, med.foltime,
+                 mean.ep.sub, dens.incid)
+    class(ans)  <- "summary.mult.ev.data.sim"
+    return(ans)
   }

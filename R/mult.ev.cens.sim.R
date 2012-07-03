@@ -20,7 +20,6 @@ function(foltime, anc.ev, beta0.ev, anc.cens, beta0.cens, z=NA, beta=0, eff=0,
     
     obs[1]   <- 0
     k.ev     <- 1
-    k.cens   <- 1
     sum      <- 0
     if (!is.na(z[1]) && z[1] == "unif")   az1 <- runif(1, as.numeric(z[2]), as.numeric(z[3]))
     if (!is.na(z[1]) && z[1] == "normal") az1 <- rnorm(1, as.numeric(z[2]), as.numeric(z[3]))
@@ -29,23 +28,21 @@ function(foltime, anc.ev, beta0.ev, anc.cens, beta0.cens, z=NA, beta=0, eff=0,
     {  
       start[j]   <- 0
       k.ev       <- j
-      k.cens     <- j
       nid[j]     <- i
       if (k.ev > length(beta0.ev))     k.ev   <- length(beta0.ev)
-      if (k.cens > length(beta0.cens)) k.cens <- length(beta0.cens)
-      if (dist.cens[k.cens] == 'llogistic')
+      if (dist.cens == 'llogistic')
       {
-        tc[j] <- exp(rlogis(1, beta0.cens[k.cens], anc.cens[k.cens]))
+        tc[j] <- exp(rlogis(1, beta0.cens, anc.cens))
       }else{
-        if (dist.cens[k.cens] == 'weibull')
+        if (dist.cens == 'weibull')
         {
-          a.cens   <- anc.cens[k.cens]
-          b.cens   <- (1/exp(-anc.cens[k.cens]*(beta0.cens[k.cens])))^(1/anc.cens[k.cens])
+          a.cens   <- anc.cens
+          b.cens   <- (1/exp(-anc.cens*(beta0.cens)))^(1/anc.cens)
           tc[j]    <- rweibull(1, a.cens, b.cens)
         }else{
-          if (dist.cens[k.cens] == 'lnorm')
+          if (dist.cens == 'lnorm')
           {
-            tc[j]  <- rlnorm(1, beta0.cens[k.cens], anc.cens[k.cens])
+            tc[j]  <- rlnorm(1, beta0.cens, anc.cens)
           } #if
         } #if
       } #if
@@ -98,7 +95,6 @@ function(foltime, anc.ev, beta0.ev, anc.cens, beta0.cens, z=NA, beta=0, eff=0,
       
       j      <- j + 1
       k.ev   <- k.ev + 1
-      k.cens <- k.cens + 1
     } #while
     
     sim.ind <- data.frame(nid=nid, ev.num=obs, time=time, 

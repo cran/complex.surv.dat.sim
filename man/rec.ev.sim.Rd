@@ -34,54 +34,55 @@ vector of arbitrary size of real components containing the ancillary parameters 
 vector of arbitrary size of real components containing the \eqn{\beta_0} parameters for the time to event distributions.
 }
   \item{dist.cens}{
-vector of arbitrary size indicating the time to censure distributions, with possible values \code{weibull} for the Weibull distribution, \code{lnorm} for the log-normal distribution and \code{llogistic} for the log-logistic distribution. If no distribution are introduced, the time to censure is assumed to follow as many different Weibull distributions as different parameters are introduced in \code{beta0.cens}.
+vector of arbitrary size indicating the time to censoring distributions, with possible values \code{weibull} for the Weibull distribution, \code{lnorm} for the log-normal distribution and \code{llogistic} for the log-logistic distribution. If no distribution are introduced, the time to censoring is assumed to follow as many different Weibull distributions as different parameters are introduced in \code{beta0.cens}.
 }
   \item{anc.cens}{
-vector of arbitrary size of real components containing the ancillary parameters for the time to censure distributions.
+vector of arbitrary size of real components containing the ancillary parameters for the time to censoring distributions.
 }
   \item{beta0.cens}{
-vector of arbitrary size of real components containing the \eqn{\beta_0} parameters for the time to censure distributions.
+vector of arbitrary size of real components containing the \eqn{\beta_0} parameters for the time to censoring distributions.
 }
   \item{z}{
-vector with three elements that contains information relative to a random effect used in order to introduce individual heterogeneity. The first element indicates the distribution: \code{"unif"} states for the uniform distribution and \code{"normal"} states for the normal distribution. The second and third elements indicates the minimum and maximum in the case of the uniform distribution and the mean and standard deviation in the case of the normal distribution. Its default value is \code{NA}, indicating that no individual heterogeneity is introduced.
+vector with three elements that contains information relative to a random effect used in order to introduce individual heterogeneity. The first element indicates the distribution: \code{"unif"} states for a uniform distribution and \code{"normal"} states for a normal distribution. The second and third elements indicates the minimum and maximum in the case of a uniform distribution and the mean and standard deviation in the case of a normal distribution. Its default value is \code{NA}, indicating that no individual heterogeneity is introduced.
 }
   \item{beta}{
 list of vectors indicating the effect of the corresponding covariate. The number of vectors in \code{beta} must match the number of covariates, and the length of each vector must match the number of events considered. Its default value is NA, indicating that no covariates are included.
 }
   \item{x}{
-list of vectors indicating the distribution and parameters of any covariate that the user need to introduce in the simulated cohort. The possible distributions are \code{"normal"} for normal distribution, \code{"unif"} for uniform distribution and \code{"bern"} for Bernoulli distribution. Its default value is NA, indicating that no covariates are included. The number of vectors in \code{x} must match the number of vectors in \code{beta}. Each vector in \code{x} must contain the name of the distribution and the parameter(s), the probability of success in Bernoulli case, the mean and the variance for the \code{normal} distribution and the minimum and maximum in the \code{uniform} case.
+list of vectors indicating the distribution and parameters of any covariate that the user need to introduce in the simulated cohort. The possible distributions are \code{"normal"} for a normal distribution, \code{"unif"} for a uniform distribution and \code{"bern"} for a Bernoulli distribution. Its default value is NA, indicating that no covariates are included. The number of vectors in \code{x} must match the number of vectors in \code{beta}. Each vector in \code{x} must contain the name of the distribution and the parameter(s), which are: the probability of success in the case of a Bernoulli distribution; the mean and the variance in the case of a \code{normal} distribution; and the minimum and maximum in the case of a \code{uniform} distribution.
 }
   \item{lambda}{
-real number indicating the mean duration of each event or discontinous risk time, supposed to follow a zero-truncated Poisson distribution. It's default value is \code{NA}, in the case that the duration of each event or discontinous risk time is unnecessary information for the user.
+real number indicating the mean duration of each event or discontinous risk time, assumed to follow a zero-truncated Poisson distribution. Its default value is \code{NA}, corresponding to the case where the duration of each event or discontinous risk time is unnecessary information for the user.
 }
   \item{max.ep}{
-integer value that match the maximum permitted number of episodes per subject. It's default value is Inf, corresponding to the case with no limit for the number of episodes per subject.
+integer value that matches the maximum permitted number of episodes per subject. Its default value is \code{Inf}, i.e. the number of episodes per subject is no limited.
 }
   \item{priskb}{
-proportion of subjects at risk before the beginning of follow-up, defaulted to 0.
+proportion of subjects at risk prior to the start of follow-up, defaults to 0.
 }
   \item{max.old}{
-maximum time at risk before the follow-up time starts.
+maximum time at risk prior to the start of follow-up.
 }
 }
 \details{
 In order to get the function to work properly, the length of the vectors containing the parameters of the time to event and time to censure distributions and the number of distributions indicated in the parameter \code{dist} must be the same. Finally, \code{priskb} and \code{max.old} must be positive numbers, with \code{priskb} being between 0 and 1.
 }
 \value{
-An object of class \code{sim.mult.ev.data}. It is a list where each element is a simulated subject and each row inside an element of the list is an episode suffered by the corresponding subject. The columns of each element of the list are detailed below
+An object of class \code{rec.ev.data.sim}. It is a list where each element is a simulated subject and each row inside an element of the list is an episode suffered by the corresponding subject. The columns of each element of the list are detailed below
 \item{nid }{an integer number that identifies the subject.}
 \item{real.episode }{number of the episode corresponding to the real history of the individual.}
 \item{obs.episode }{number of the episode corresponding to the follow-up time of the individual.}
 \item{time }{time until the corresponding event happens (or time to subject drop-out), regarding the beginning of the follow-up time.}
 \item{status }{logical value indicating if the episode corresponds to an event or a drop-out.}
-\item{start }{time at which an episode starts, taking as origin of time scale the beginning of the follow-up.}
-\item{stop }{time at which an episode ends, taking as origin of time scale the beginning of the follow-up.}
+\item{start }{time at which an episode starts, taking the beginning of follow-up as the origin of the time scale.}
+\item{stop }{time at which an episode ends, taking the beginning of follow-up as the origin of the time scale.}
 \item{time2 }{time until the corresponding event happens (or time to subject drop-out), in calendar time.}
 \item{start2 }{time at which an episode starts, where the time scale is calendar time.}
 \item{stop2 }{time at which an episode ends, where the time scale is calendar time.}
-\item{old }{real value indicating the time that the individual has been in risk before the beginning of the follow-up.}
-\item{risk.bef }{factor that indicates if an individual has been at risk before the beginning of follow-up or not.}
+\item{old }{real value indicating the time that the individual was at risk before the beginning of follow-up.}
+\item{risk.bef }{factor that indicates if an individual was at risk before the beginning of follow-up or not.}
 \item{long }{time not at risk immediately after an episode.}
+\item{z}{Individual heterogeneity generated according to the specified distribution.}
 \item{x}{value of each covariate randomly generated for each subject in the cohort.}
 }
 \references{

@@ -24,12 +24,12 @@ The output contains \code{z} and \code{real.ep.accum} because they can be intere
 
 \value{
   An object of class \code{sim.ev.agg.data}. It is a list with a row for each subject in \code{data}, and the following columns
-  \item{nid }{\code{integer} number that identifies the subject.}
-  \item{old }{\code{integer} number or NA, indicating the time that the subject has been at risk.}
-  \item{risk.bef }{\code{boolean} indicating if the subject has been at risk before the beginning of the follow-up time or not.}
-  \item{z }{random effect covariate used in order to introduce individual heterogeneity.}
-  \item{x }{value of each covariate randomly generated for each subject in the cohort.}
-  \item{obs.ep.accum }{aggregated number of episodes suffered by an individual from the beginning of subject's follow-up time.}
+  \item{nid }{an \code{integer} number that identifies the subject.}
+  \item{old }{real value indicating the time that the individual was at risk before the beginning of the follow-up.}
+  \item{risk.bef }{\code{Boolean} indicating if the subject was at risk before the beginning of the follow-up time or not.}
+  \item{z }{individual heterogeneity, generated according to the specified distribution.}
+  \item{x }{ value of each covariate randomly generated for each subject in the cohort.}
+  \item{obs.ep.accum }{aggregated number of episodes suffered by an individual since the beginning of subject's follow-up time.}
   \item{real.ep.accum }{aggregated number of episodes suffered by an individual from the beginning of subject's history.}
   \item{time.accum}{global time of follow-up for each individual.}
   \item{long.accum}{global time not at risk within the follow-up time, corresponding to the sum of times between the end of an event and the beginning of the next.}

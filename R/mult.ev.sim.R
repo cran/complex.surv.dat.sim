@@ -1,10 +1,10 @@
 mult.ev.sim <-
-function(n, foltime, dist.ev, anc.ev, beta0.ev, dist.cens=rep("weibull",length(beta0.cens)), anc.cens, beta0.cens, z=NA, beta=NA, x=NA,
+function(n, foltime, dist.ev, anc.ev, beta0.ev, dist.cens="weibull", anc.cens, beta0.cens, z=NA, beta=NA, x=NA,
            priskb=0, max.old=0, nsit)
   {
     # Arguments check
     if (length(anc.ev) != length(beta0.ev)) stop("Wrong number of parameters")
-    if (length(anc.cens) != length(beta0.cens)) stop("Wrong number of parameters")
+    if (length(anc.cens) != length(beta0.cens) || length(anc.cens) != 1) stop("Wrong number of parameters")
     if (length(anc.ev) != length(dist.ev)) stop("Wrong number of parameters")
     if (priskb > 1 || priskb < 0) stop("Wrong proportion of left truncated individuals")
     if (max.old < 0) stop("Wrong maximum time before follow-up")
@@ -70,5 +70,6 @@ function(n, foltime, dist.ev, anc.ev, beta0.ev, dist.cens=rep("weibull",length(b
     class(sim.data) <- "mult.ev.data.sim"
     attr(sim.data, "n") <- n
     attr(sim.data, "foltime") <- foltime
+    attr(sim.data, "nsit") <- nsit
     return(sim.data)
   }
