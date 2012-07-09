@@ -53,8 +53,7 @@ sim.data <- mult.ev.sim(n=1000, foltime=3600, dist.ev=c('llogistic','weibull', '
 beta0.ev=c(5.84298525742252, 5.94362650803287, 5.78182528904637, 5.46865223339755),,
 anc.cens=1.17783687569519, 
 beta0.cens=7.39773677281100, 
-z=c("unif", 0.8,1.2), beta=list(c(-0.4,-0.5,-0.6,-0.7), c(0,0,0,1)), x=list(c("bern", 0.5), c("unif", 0.7, 1.3)), 
-priskb=0.3, max.old=300, nsit=4)
+z=c("unif", 0.8,1.2), beta=list(c(-0.4,-0.5,-0.6,-0.7), c(0,0,0,1)), x=list(c("bern", 0.5), c("unif", 0.7, 1.3)), nsit=4)
 
 summary(sim.data)
 

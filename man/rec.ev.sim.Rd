@@ -65,7 +65,7 @@ maximum time at risk prior to the start of follow-up.
 }
 }
 \details{
-In order to get the function to work properly, the length of the vectors containing the parameters of the time to event and time to censure distributions and the number of distributions indicated in the parameter \code{dist} must be the same. Finally, \code{priskb} and \code{max.old} must be positive numbers, with \code{priskb} being between 0 and 1.
+In order to get the function to work properly, the length of the vectors containing the parameters of the time to event and time to censure distributions and the number of distributions indicated in the parameter \code{dist} must be the same. Finally, \code{priskb} and \code{max.old} must be positive numbers, with \code{priskb} being between 0 and 1. Notice that large values of \code{max.old} can result in the routine taking a long time to simulate a cohort with the specified size.
 }
 \value{
 An object of class \code{rec.ev.data.sim}. It is a list where each element is a simulated subject and each row inside an element of the list is an episode suffered by the corresponding subject. The columns of each element of the list are detailed below

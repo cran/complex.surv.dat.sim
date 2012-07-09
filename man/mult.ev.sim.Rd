@@ -13,7 +13,7 @@ Multiple event data occurs when each subject can have more than one event of ent
 We can obtain the observation time of the \eqn{k}-th event in the \eqn{i}-th subject, \eqn{y_ik}, in the same manner that we can simulate \eqn{k} simple independent survival data. Notice that, in multiple-type events, \eqn{T_{ik}} and \eqn{C_{i}} are mutually independent and, furthermore, the failure in each event is independent of the others (within each subject all \eqn{y_ik} are independents for all \eqn{k}).
 }
 \usage{
-mult.ev.sim(n, foltime, dist.ev, anc.ev, beta0.ev, dist.cens="weibull", anc.cens, beta0.cens, z=NA, beta=NA, x=NA, priskb=0, max.old=0, nsit)
+mult.ev.sim(n, foltime, dist.ev, anc.ev, beta0.ev, dist.cens="weibull", anc.cens, beta0.cens, z=NA, beta=NA, x=NA, nsit)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -50,18 +50,13 @@ list of vectors indicating the effect of the corresponding covariate. The number
   \item{x}{
 list of vectors indicating the distribution and parameters of any covariate that the user needs to introduce in the simulated cohort. The possible distributions are \code{"normal"} for normal distribution, \code{"unif"} for uniform distribution and \code{"bern"} for Bernoulli distribution. Its default value is NA, indicating that no covariates are included. The number of vectors in \code{x} must match the number of vectors in \code{beta}. Each vector in \code{x} must contain the name of the distribution and the parameter(s), which are: the probability of success in the case of a Bernoulli distribution; the mean and the variance in the case of a \code{normal} distribution; and the minimum and maximum in the case of a \code{uniform} distribution.
 }
-  \item{priskb}{
-proportion of subjects at risk prior to the start of follow-up, defaults to 0.
-}
-  \item{max.old}{
-maximum time at risk prior to the start of follow-up.
-}
+
   \item{nsit}{
 Number of different events that a subject can suffer. It must match the number of distributions specified in \code{dist.ev}.
 }
 }
 \details{
-In order to get the function to work properly, the length of the vectors containing the parameters of the time to event and the number of distributions indicated in the parameter \code{dist.ev} must be the same. Finally, \code{priskb} and \code{max.old} must be positive numbers, with \code{priskb} being between 0 and 1. Notice that large values of \code{max.old} can result in the routine taking a long time to simulate a cohort with the specified size.
+In order to get the function to work properly, the length of the vectors containing the parameters of the time to event and the number of distributions indicated in the parameter \code{dist.ev} must be the same. 
 }
 \value{
 An object of class \code{mult.ev.data.sim}. It is a list where each element is a simulated subject and each row inside an element of the list is an event suffered by the corresponding subject. The columns of each element of the list are detailed below
@@ -71,8 +66,6 @@ An object of class \code{mult.ev.data.sim}. It is a list where each element is a
 \item{status }{logical value indicating if the corresponding event has been suffered or not.}
 \item{start }{time at which the follow-up time begins for each event.}
 \item{stop }{time at which the follow-up time ends for each event.}
-\item{old }{real value indicating the time that the individual has been in risk before the beginning of the follow-up.}
-\item{risk.bef }{factor that indicates if an individual has been at risk before the beginning of follow-up or not.}
 \item{z}{Individual heterogeneity generated according to the specified distribution.}
 \item{x}{value of each covariate randomly generated for each subject in the cohort.}
 }
@@ -95,8 +88,7 @@ sim.data <- mult.ev.sim(n=1000, foltime=3600, dist.ev=c('llogistic','weibull', '
 beta0.ev=c(5.84298525742252, 5.94362650803287, 5.78182528904637, 5.46865223339755),,
 anc.cens=1.17783687569519, 
 beta0.cens=7.39773677281100, 
-z=c("unif", 0.8,1.2), beta=list(c(-0.4,-0.5,-0.6,-0.7), c(0,0,0,1)), x=list(c("bern", 0.5), c("unif", 0.7, 1.3)), 
-priskb=0.3, max.old=300, nsit=4)
+z=c("unif", 0.8,1.2), beta=list(c(-0.4,-0.5,-0.6,-0.7), c(0,0,0,1)), x=list(c("bern", 0.5), c("unif", 0.7, 1.3)), nsit=4)
 
 summary(sim.data)
 }
