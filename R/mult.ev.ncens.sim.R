@@ -18,9 +18,12 @@ function(foltime, anc.ev, beta0.ev, anc.cens, beta0.cens, z=NA, beta=0, eff=0,
     obs[1]   <- 1
     k.ev     <- 1
     sum      <- 0
-    if (!is.na(z[1]) && z[1] == "unif")   az1 <- runif(1, as.numeric(z[2]), as.numeric(z[3]))
-    if (!is.na(z[1]) && z[1] == "normal") az1 <- rnorm(1, as.numeric(z[2]), as.numeric(z[3]))
-    if (is.na(z[1]))                      az1 <- 1
+    if (!is.na(z[1]) && z[1] == "gamma")    az1 <- rgamma(1, as.numeric(z[2]), as.numeric(z[3]))
+    if (!is.na(z[1]) && z[1] == "exp")      az1 <- rgamma(1, 1, as.numeric(z[2]))
+    if (!is.na(z[1]) && z[1] == "weibull")  az1 <- rweibull(1, as.numeric(z[2]), as.numeric(z[3]))
+    if (!is.na(z[1]) && z[1] == "unif")     az1 <- runif(1, as.numeric(z[2]), as.numeric(z[3]))
+    if (!is.na(z[1]) && z[1] == "invgauss") az1 <- rinvgauss(1, as.numeric(z[2]), as.numeric(z[3]))
+    if (is.na(z[1]))                        az1 <- 1
     # Time to censorship
     if (dist.cens == 'llogistic')
     {

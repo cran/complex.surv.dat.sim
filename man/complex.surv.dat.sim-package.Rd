@@ -8,18 +8,26 @@ Simulation of complex survival data
 }
 \description{
 Simulation of cohorts in a context of complex survival analysis, multiple events and recurrent events including several covariates, individual heterogeneity and periods at risk before and after the initial time of follow-up.
-\tabular{ccccc}{
-         Distribution \tab Survival function   \tab Density function \tab Parametrization \tab Time\cr
-         Weibull \tab \eqn{exp(- \lambda t^p)} \tab \eqn{\lambda pt^{p-1}exp(- \lambda t^p)} \tab \eqn{\lambda = exp(-p \beta_0)} \tab \eqn{t = (- ln u/ \lambda)^{1/p}}\cr
-         Log-normal \tab \eqn{1- \Theta((log(t)- \mu)/ \sigma)} \tab \eqn{(1/(t \sigma \sqrt{2 \pi})) exp((-1/(2 \sigma^2))(log(t) - \mu)^2)} \tab \eqn{\mu = \beta_0} \tab \eqn{t = exp(\beta_0 + \gamma (log(u)-log(1-u)))}\cr
-         Log-logistic \tab \eqn{1/(1+(\lambda t)^{1/ \gamma}}) \tab \eqn{\lambda^{1/ \gamma}t^{1/ (\gamma - 1)}/ (\gamma (1 + (\lambda t)^{1/ \gamma})^2)} \tab \eqn{\lambda = exp(- \beta_0)} \tab \eqn{t = exp(\beta_0 + \sigma \Theta^{-1}(u))}\cr
+
+\tabular{cccc}{
+         Distribution \tab Survival function   \tab Density function \tab Parametrization\cr
+         Weibull \tab \eqn{exp(- \lambda t^p)} \tab \eqn{\lambda pt^{p-1}exp(- \lambda t^p)} \tab \eqn{\lambda = exp(-p \beta_0)}\cr
+         Log-normal \tab \eqn{1- \Theta((log(t)- \mu)/ \sigma)} \tab \eqn{(1/(t \sigma \sqrt{2 \pi})) exp((-1/(2 \sigma^2))(log(t) - \mu)^2)} \tab \eqn{\mu = \beta_0}\cr
+         Log-logistic \tab \eqn{1/(1+(\lambda t)^{1/ \gamma}}) \tab \eqn{\lambda^{1/ \gamma}t^{1/ (\gamma - 1)}/ (\gamma (1 + (\lambda t)^{1/ \gamma})^2)} \tab \eqn{\lambda = exp(- \beta_0)}\cr
        }
+\tabular{cc}{
+         Distribution \tab Time\cr
+         Weibull \tab \eqn{t = (- ln u/ \lambda)^{1/p}}\cr
+         Log-normal \tab \eqn{t = exp(\beta_0 + \gamma (log(u)-log(1-u)))}\cr
+         Log-logistic \tab \eqn{t = exp(\beta_0 + \sigma \Theta^{-1}(u))}\cr
+       }
+       
 Where \eqn{\Theta} is the standard normal cumulative distribution.
 
 In order to simulate censored survival data, two survival distributions are required, one for the uncensored survival times that would be observed if the follow-up had been sufficiently long to reach the event and another representing the censoring mechanism. The uncensored survival distribution, \eqn{T'_i}, for \eqn{i=1,\ldots,n} subjects, could be generated to depend on a set of covariates with a specified relationship with survival, which represents the true prognostic importance of each covariate (Burton, 2006). The package allows to simulate times by means of using Weibull (and exponential as a particular case), log-normal and log-logistic distributions, as such is showed in previous table.
 To induce individual heterogeneity or within-subject correlation we generate \eqn{Z_i}, a random effect covariate that follows a particular distribution (Uniform or Normal). 
 
-\deqn{t_i = t_i'× z_i}
+\deqn{t_i = t_i'\cdot z_i}
 
 When \eqn{z_i = 1}, for all subjects, we are in the case of individual homogeneity and the survival times are completely specified by the covariates.
 Random non-informative right censoring, \eqn{C_i}, can be generated in a similar manner to the uncensored survival times, \eqn{T'_i}, by assuming a  particular distribution for the censoring times (previous table), but without including any covariates nor individual heterogenity. 
@@ -56,7 +64,7 @@ Kelly PJ, Lim LL. Survival analysis for recurrent event data: an application to 
 
 Reis RJ, Utzet M, La Rocca PF, Nedel FB, Martin M, Navarro A. Previous sick leaves as predictor of subsequent ones. Int Arch Occup Environ Health 2011 Jun;\bold{84}(5):491-499.
 
-Navarro A, Morina D, Reis R, Nedel FB, Martin M, Alvarado S. Hazard functions to describe patterns of new and recurrent sick leave episodes for different diagnoses. Scand J Work Environ Health 2012 Jan 27.
+Navarro A, Moriña D, Reis R, Nedel FB, Martin M, Alvarado S. Hazard functions to describe patterns of new and recurrent sick leave episodes for different diagnoses. Scand J Work Environ Health 2012 Jan 27.
 
 Bender R, Augustin T, Blettner M. Generating survival times to simulate Cox proportional hazards models. Stat Med 2005 Jun 15;\bold{24}(11):1713-1723.
 

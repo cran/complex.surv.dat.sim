@@ -1,5 +1,5 @@
 summary.mult.ev.data.sim <-
-  function(object, ...)
+function(object, ...)
   {
     if(!inherits(object, "mult.ev.data.sim")) stop("Wrong data type")
     sub.risk    <- vector()

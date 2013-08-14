@@ -13,8 +13,9 @@ Recurrent event data is a type of multiple event where the subject can experienc
 In a recurrent data context, each subject can present different number of episodes. We talk of episodes (or occurrences) rather than events since each occurrence is a new episode of the same event. This package supposes that there exists one different and independent \eqn{Y_k} distribution depending on \eqn{k}, the number of episode at risk. The simulating process for each \eqn{Y_k} is the same than for the multiple events situation (see \code{\link{mult.ev.sim}}), but in this case, obviously, a subject cannot be at risk for the \eqn{k}-th episode if he/she hadn't had the \eqn{k-1}-th. 
 }
 \usage{
-rec.ev.sim(n, foltime, dist.ev, anc.ev, beta0.ev, dist.cens=rep("weibull",length(beta0.cens)), 
-anc.cens, beta0.cens, z=NA, beta=NA, x=NA, lambda=NA, max.ep=Inf, priskb=0, max.old=0)
+rec.ev.sim(n, foltime, dist.ev, anc.ev, beta0.ev, dist.cens=rep("weibull",
+length(beta0.cens)), anc.cens, beta0.cens, z=NA, beta=NA, x=NA, lambda=NA, 
+max.ep=Inf, priskb=0, max.old=0)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -43,7 +44,7 @@ vector of arbitrary size of real components containing the ancillary parameters 
 vector of arbitrary size of real components containing the \eqn{\beta_0} parameters for the time to censoring distributions.
 }
   \item{z}{
-vector with three elements that contains information relative to a random effect used in order to introduce individual heterogeneity. The first element indicates the distribution: \code{"unif"} states for a uniform distribution and \code{"normal"} states for a normal distribution. The second and third elements indicates the minimum and maximum in the case of a uniform distribution and the mean and standard deviation in the case of a normal distribution. Its default value is \code{NA}, indicating that no individual heterogeneity is introduced.
+vector with three elements that contains information relative to a random effect used in order to introduce individual heterogeneity. The first element indicates the distribution: \code{"unif"} states for a uniform distribution, \code{"gamma"} states for a gamma distribution, \code{"exp"} states for an exponential distribution, \code{"weibull"} states for a Weibull distribution and \code{"invgauss"} states for an inverse gaussian distribution. The second and third elements indicates the minimum and maximum in the case of a uniform distribution (both must be positive) and the parameters in the case of the rest of distributions. Note that just one parameter is needed in the case of exponential distribution. Its default value is \code{NA}, indicating that no individual heterogeneity is introduced.
 }
   \item{beta}{
 list of vectors indicating the effect of the corresponding covariate. The number of vectors in \code{beta} must match the number of covariates, and the length of each vector must match the number of events considered. Its default value is NA, indicating that no covariates are included.
@@ -105,14 +106,16 @@ David Moriña, Centre Tecnològic de Nutrició i Salut and Albert Navarro, Universi
 \code{\link{complex.surv.dat.sim-package}}, \code{\link{accum}}, \code{\link{mult.ev.sim}}
 }
 \examples{
-### A cohort with 500 subjects, with a maximum follow-up time of 1825 days and just a covariate, following a Bernoulli distribution, and a corresponding beta of -0.4, -0.5, -0.6 and -0.7 for each episode.
+### A cohort with 500 subjects, with a maximum follow-up time of 1825 days and 
+### just a covariate, following a Bernoulli distribution, and a corresponding 
+### beta of -0.4, -0.5, -0.6 and -0.7 for each episode.
 
-sim.data <- rec.ev.sim(n=500, foltime=1825, dist.ev=c('lnorm','llogistic', 'weibull','weibull'), anc.ev=c(1.498, 0.924, 0.923, 1.051),
-beta0.ev=c(7.195, 6.583, 6.678, 6.430),,
-anc.cens=c(1.272, 1.218, 1.341, 1.484),
-beta0.cens=c(7.315, 6.975, 6.712, 6.399), z=c("unif", 0.8,1.2), beta=list(c(-0.4,-0.5,-0.6,-0.7)), x=list(c("bern", 0.5)),
-lambda=c(2.18,2.33,2.40,3.46), 
-priskb=0.5, max.old=730)
+sim.data <- rec.ev.sim(n=500, foltime=1825, dist.ev=c('lnorm','llogistic', 
+'weibull','weibull'),anc.ev=c(1.498, 0.924, 0.923, 1.051),beta0.ev=c(7.195, 
+6.583, 6.678, 6.430),,anc.cens=c(1.272, 1.218, 1.341, 1.484),
+beta0.cens=c(7.315, 6.975, 6.712, 6.399), z=c("unif", 0.8,1.2), 
+beta=list(c(-0.4,-0.5,-0.6,-0.7)), x=list(c("bern", 0.5)),
+lambda=c(2.18,2.33,2.40,3.46), priskb=0.5, max.old=730)
 
 summary(sim.data)
 }

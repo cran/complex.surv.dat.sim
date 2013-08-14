@@ -8,8 +8,10 @@ function(n, foltime, dist.ev, anc.ev, beta0.ev, dist.cens=rep("weibull",length(b
   if (length(anc.ev) != length(dist.ev)) stop("Wrong number of parameters")
   if (priskb > 1 || priskb < 0) stop("Wrong proportion of left-censured individuals")
   if (max.old < 0) stop("Wrong maximum time before follow-up")
-  if (!is.na(z) && length(z) != 3) stop("Wrong numbers of elements in z")
-  if (!is.na(z) && z[1] == "unif" && as.numeric(z[2]) > as.numeric(z[3])) stop("Wrong specification of z")
+  if (!is.na(z) && length(z) != 3 && z[1] != "exp") stop("Wrong numbers of elements in z")
+  if (!is.na(z) && length(z) != 2 && z[1] == "exp") stop("Wrong numbers of elements in z")
+  if (!is.na(z) && z[1] == "unif" && as.numeric(z[3]) <= as.numeric(z[2])) stop("Wrong specification of z")
+  if (!is.na(z) && z[1] == "unif" && as.numeric(z[2]) < 0) stop("Wrong specification of z")
   if (!is.na(x) && is.na(beta)) stop("Wrong specification of covariables!")
   if (is.na(x) && !is.na(beta)) stop("Wrong specification of covariables")
   

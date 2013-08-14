@@ -13,7 +13,8 @@ Multiple event data occurs when each subject can have more than one event of ent
 We can obtain the observation time of the \eqn{k}-th event in the \eqn{i}-th subject, \eqn{y_ik}, in the same manner that we can simulate \eqn{k} simple independent survival data. Notice that, in multiple-type events, \eqn{T_{ik}} and \eqn{C_{i}} are mutually independent and, furthermore, the failure in each event is independent of the others (within each subject all \eqn{y_ik} are independents for all \eqn{k}).
 }
 \usage{
-mult.ev.sim(n, foltime, dist.ev, anc.ev, beta0.ev, dist.cens="weibull", anc.cens, beta0.cens, z=NA, beta=NA, x=NA, nsit)
+mult.ev.sim(n, foltime, dist.ev, anc.ev, beta0.ev, dist.cens="weibull", anc.cens, 
+beta0.cens, z=NA, beta=NA, x=NA, nsit)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -42,7 +43,7 @@ real number containing the ancillary parameter for the time to censoring distrib
 real number containing the \eqn{\beta_0} parameter for the time to censoring distribution.
 }
   \item{z}{
-vector with three elements that contains information relative to a random factor used in order to introduce individual heterogeneity. The first element indicates the distribution: \code{"unif"} states for the uniform distribution and \code{"normal"} states for the normal distribution. The second and third elements indicates the minimum and maximum in the case of a uniform distribution and the mean and standard deviation in the case of a normal distribution. Its default value is \code{NA}, indicating that no individual heterogeneity is introduced.
+vector with three elements that contains information relative to a random effect used in order to introduce individual heterogeneity. The first element indicates the distribution: \code{"unif"} states for a uniform distribution, \code{"gamma"} states for a gamma distribution, \code{"exp"} states for an exponential distribution, \code{"weibull"} states for a Weibull distribution and \code{"invgauss"} states for an inverse gaussian distribution. The second and third elements indicates the minimum and maximum in the case of a uniform distribution (both must be positive) and the parameters in the case of the rest of distributions. Note that just one parameter is needed in the case of exponential distribution. Its default value is \code{NA}, indicating that no individual heterogeneity is introduced.
 }
   \item{beta}{
 list of vectors indicating the effect of the corresponding covariate. The number of vectors in \code{beta} must match the number of covariates, and the length of each vector must match the number of events considered. Its default value is NA, indicating that no covariates are included.
@@ -82,13 +83,19 @@ David Moriña, Centre Tecnològic de Nutrició i Salut and Albert Navarro, Universi
 \code{\link{complex.surv.dat.sim-package}}, \code{\link{accum}}, \code{\link{rec.ev.sim}}
 }
 \examples{
-### A cohort with 1000 subjects, with a maximum follow-up time of 3600 days and two covariates, following a Bernoulli and uniform distribution respectively, and a corresponding beta of -0.4, -0.5, -0.6 and -0.7 for each event for the first covariate and a corresponding beta of 0, 0, 0 and 1 for each event for the second covariate. Notice that the time to censorship is assumed to follow a Weibull distribution, as no other distribution is stated.
+### A cohort with 1000 subjects, with a maximum follow-up time of 3600 days and two 
+### covariates, following a Bernoulli and uniform distribution respectively, and a 
+### corresponding beta of -0.4, -0.5, -0.6 and -0.7 for each event for the first 
+### covariate and a corresponding beta of 0, 0, 0 and 1 for each event for the 
+### second covariate. Notice that the time to censorship is assumed to follow a 
+### Weibull distribution, as no other distribution is stated.
 
-sim.data <- mult.ev.sim(n=1000, foltime=3600, dist.ev=c('llogistic','weibull', 'weibull','weibull'), anc.ev=c(0.69978200185280, 0.79691659193027, 0.82218416457321, 0.85817155198598), 
-beta0.ev=c(5.84298525742252, 5.94362650803287, 5.78182528904637, 5.46865223339755),,
-anc.cens=1.17783687569519, 
-beta0.cens=7.39773677281100, 
-z=c("unif", 0.8,1.2), beta=list(c(-0.4,-0.5,-0.6,-0.7), c(0,0,0,1)), x=list(c("bern", 0.5), c("unif", 0.7, 1.3)), nsit=4)
+sim.data <- mult.ev.sim(n=1000, foltime=3600, dist.ev=c('llogistic','weibull', 
+'weibull','weibull'),anc.ev=c(0.69978200185280, 0.79691659193027, 
+0.82218416457321, 0.85817155198598),beta0.ev=c(5.84298525742252, 5.94362650803287,
+5.78182528904637, 5.46865223339755),,anc.cens=1.17783687569519,
+beta0.cens=7.39773677281100,z=c("unif", 0.8,1.2), beta=list(c(-0.4,-0.5,-0.6,-0.7),
+c(0,0,0,1)), x=list(c("bern", 0.5), c("unif", 0.7, 1.3)), nsit=4)
 
 summary(sim.data)
 }
